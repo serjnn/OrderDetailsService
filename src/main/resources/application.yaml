@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${db-url:jdbc:postgresql://localhost:5432/orderdetails}
+    username: ${db-username:postgres}
+    password: ${db-password:Vaifery111}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  main:
+    allow-circular-references: true
+  application:
+    name: order
+
+server:
+  port: 7003
