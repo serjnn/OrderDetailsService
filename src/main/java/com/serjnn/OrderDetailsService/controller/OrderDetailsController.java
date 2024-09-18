@@ -1,13 +1,15 @@
 package com.serjnn.OrderDetailsService.controller;
 
 
-import com.serjnn.OrderDetailsService.dto.DetailsRequest;
+import com.serjnn.OrderDetailsService.dto.OrderDTO;
+import com.serjnn.OrderDetailsService.dto.UuidDTO;
 import com.serjnn.OrderDetailsService.model.OrderDetails;
 import com.serjnn.OrderDetailsService.service.OrderDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,14 +26,13 @@ public class OrderDetailsController {
         return orderDetailsService.findByClientId(id);
     }
 
-    @PostMapping
-    void save(@RequestBody DetailsRequest detailsRequest){
-        OrderDetails orderDetails = new OrderDetails(
-                detailsRequest.getClientId(),
+    @PostMapping("/create")
+    void save(@RequestBody OrderDTO orderDTO){
+        orderDetailsService.create(orderDTO);
+    }
 
-                detailsRequest.getProductIds(),
-                detailsRequest.getSum());
-        orderDetailsService.save(orderDetails);
-
+    @PostMapping("/remove")
+    void save(@RequestBody UUID uuid){
+        orderDetailsService.remove(uuid);
     }
 }
