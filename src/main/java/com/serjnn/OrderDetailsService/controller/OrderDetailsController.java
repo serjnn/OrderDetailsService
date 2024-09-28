@@ -2,13 +2,13 @@ package com.serjnn.OrderDetailsService.controller;
 
 
 import com.serjnn.OrderDetailsService.dto.OrderDTO;
-import com.serjnn.OrderDetailsService.dto.UuidDTO;
 import com.serjnn.OrderDetailsService.model.OrderDetails;
 import com.serjnn.OrderDetailsService.service.OrderDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -16,23 +16,24 @@ import java.util.UUID;
 @RequestMapping("/api/v1")
 public class OrderDetailsController {
     private final OrderDetailsService orderDetailsService;
+
     @GetMapping
-    List<OrderDetails> getAll(){
-        return  orderDetailsService.findAll();
+    Flux<OrderDetails> getAll() {
+        return orderDetailsService.findAll();
     }
 
     @GetMapping("/byClient/{id}")
-    List<OrderDetails> findByClientId(@PathVariable("id") Long id){
+    Flux<OrderDetails> findByClientId(@PathVariable("id") Long id) {
         return orderDetailsService.findByClientId(id);
     }
 
     @PostMapping("/create")
-    void save(@RequestBody OrderDTO orderDTO){
-        orderDetailsService.create(orderDTO);
+    Mono<Void> save(@RequestBody OrderDTO orderDTO) {
+        return orderDetailsService.create(orderDTO).then();
     }
 
     @PostMapping("/remove")
-    void save(@RequestBody UUID uuid){
-        orderDetailsService.remove(uuid);
+    Mono<Void> save(@RequestBody UUID uuid) {
+        return orderDetailsService.remove(uuid);
     }
 }

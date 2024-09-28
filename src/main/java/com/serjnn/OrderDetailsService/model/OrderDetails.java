@@ -1,11 +1,11 @@
 package com.serjnn.OrderDetailsService.model;
 
 
-import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,11 +14,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+
 @Table(name = "order_details")
 public class OrderDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private UUID uuid;

@@ -4,11 +4,11 @@ package com.serjnn.OrderDetailsService.service;
 import com.serjnn.OrderDetailsService.dto.OrderDTO;
 import com.serjnn.OrderDetailsService.model.OrderDetails;
 import com.serjnn.OrderDetailsService.repo.OrderDetailsRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -19,19 +19,20 @@ public class OrderDetailsService {
     private final OrderDetailsRepository orderDetailsRepository;
 
 
-    public List<OrderDetails> findAll(){
+    public Flux<OrderDetails> findAll() {
         return orderDetailsRepository.findAll();
     }
-    public List<OrderDetails> findByClientId(Long id){
+
+    public Flux<OrderDetails> findByClientId(Long id) {
         return orderDetailsRepository.findByClientId(id);
     }
 
-    public void save(OrderDetails orderDetails){
-        orderDetailsRepository.save(orderDetails);
+    public Mono<Void> save(OrderDetails orderDetails) {
+        return orderDetailsRepository.save(orderDetails).then();
     }
 
 
-    public void create(OrderDTO orderDTO) {
+    public Mono<Void> create(OrderDTO orderDTO) {
         String products_ids = orderDTO
                 .getItems()
                 .stream()
@@ -41,15 +42,15 @@ public class OrderDetailsService {
         OrderDetails orderDetails = new OrderDetails(
                 orderDTO.getOrderId(),
                 orderDTO.getClientID(),
-                products_ids.substring(0,products_ids.length()-1),
+                products_ids.substring(0, products_ids.length() - 1),
                 orderDTO.getTotalSum());
-        save(orderDetails);
+        return save(orderDetails);
 
     }
 
 
-    @Transactional
-    public void remove(UUID uuid) {
-        orderDetailsRepository.deleteByUuid(uuid);
+
+    public Mono<Void> remove(UUID uuid) {
+        return orderDetailsRepository.deleteByUuid(uuid);
     }
 }
