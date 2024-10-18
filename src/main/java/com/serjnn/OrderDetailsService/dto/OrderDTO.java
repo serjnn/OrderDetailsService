@@ -8,15 +8,9 @@ import java.util.UUID;
 
 @Getter
 public class OrderDTO {
-
     private UUID orderId;
-
     private Long clientID;
-
-
     private List<BucketItemDTO> items;
-
-
     private BigDecimal totalSum;
 
 }

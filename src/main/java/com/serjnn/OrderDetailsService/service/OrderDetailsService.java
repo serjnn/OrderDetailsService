@@ -27,7 +27,7 @@ public class OrderDetailsService {
         return orderDetailsRepository.findByClientId(id);
     }
 
-    public Mono<Void> save(OrderDetails orderDetails) {
+    private Mono<Void> save(OrderDetails orderDetails) {
         return orderDetailsRepository.save(orderDetails).then();
     }
 
@@ -36,7 +36,7 @@ public class OrderDetailsService {
         String products_ids = orderDTO
                 .getItems()
                 .stream()
-                .map(prod -> prod.getId() + ":" + prod.getQuantity() + "|")
+                .map(prod -> prod.getName() + ":" + prod.getQuantity() + "|")
                 .collect(Collectors.joining());
 
         OrderDetails orderDetails = new OrderDetails(

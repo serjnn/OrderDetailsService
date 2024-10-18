@@ -21,11 +21,9 @@ public class OrderDetails {
     private long id;
 
     private UUID uuid;
-
     private Long clientId;
     private String products_ids;
     private BigDecimal sum;
-
     private LocalDateTime created_at;
 
 
