@@ -17,11 +17,6 @@ import java.util.UUID;
 public class OrderDetailsController {
     private final OrderDetailsService orderDetailsService;
 
-    @GetMapping
-    Flux<OrderDetails> getAll() {
-        return orderDetailsService.findAll();
-    }
-
     @GetMapping("/byClient/{id}")
     Flux<OrderDetails> findByClientId(@PathVariable("id") Long id) {
         return orderDetailsService.findByClientId(id);
@@ -29,7 +24,7 @@ public class OrderDetailsController {
 
     @PostMapping("/create")
     Mono<Void> save(@RequestBody OrderDTO orderDTO) {
-        return orderDetailsService.create(orderDTO).then();
+        return orderDetailsService.createOrder(orderDTO).then();
     }
 
     @PostMapping("/remove")
