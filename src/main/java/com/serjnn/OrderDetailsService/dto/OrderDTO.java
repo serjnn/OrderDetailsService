@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 public class OrderDTO {
     private UUID orderId;
-    private Long clientID;
+    private long clientId;
     private List<BucketItemDTO> items;
     private BigDecimal totalSum;
 

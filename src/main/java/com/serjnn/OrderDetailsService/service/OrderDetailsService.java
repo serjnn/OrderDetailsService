@@ -17,38 +17,35 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderDetailsService {
+
     private final OrderDetailsRepository orderDetailsRepository;
 
-    public Flux<OrderDetails> findByClientId(Long id) {
+    public Flux<OrderDetails> findByClientId(long id) {
         return orderDetailsRepository.findByClientId(id);
     }
 
-    private Mono<Void> save(OrderDetails orderDetails) {
-        return orderDetailsRepository.save(orderDetails).then();
-    }
 
-    public Mono<Void> createOrder(OrderDTO orderDTO) {
+
+    public Mono<OrderDetails> createOrder(OrderDTO orderDTO) {
         OrderDetails orderDetails = new OrderDetails(
                 orderDTO.getOrderId(),
-                orderDTO.getClientID(),
-                getProductIds(orderDTO.getItems()),
+                orderDTO.getClientId(),
+                this.getProductIds(orderDTO.getItems()),
                 orderDTO.getTotalSum());
-        return save(orderDetails);
+        return orderDetailsRepository.save(orderDetails);
 
     }
 
     private String getProductIds(List<BucketItemDTO> items) {
         return items.stream()
-                .map(prod -> prod.getName() + ":" + prod.getQuantity() + "|")
+                .map(prod -> prod.getName()
+                        .concat(":")
+                        .concat(prod.getQuantity().toString())
+                        .concat("|"))
                 .collect(Collectors.joining());
-
-
-
-
-
     }
 
-    public Mono<Void> remove(UUID uuid) {
+    public Mono<Void> removeOrder(UUID uuid) {
         return orderDetailsRepository.deleteByUuid(uuid);
     }
 }

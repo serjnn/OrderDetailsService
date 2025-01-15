@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 public interface OrderDetailsRepository extends ReactiveCrudRepository<OrderDetails, Long> {
-    Flux<OrderDetails> findByClientId(Long id);
+    Flux<OrderDetails> findByClientId(long id);
 
     Mono<Void> deleteByUuid(UUID uuid);
 

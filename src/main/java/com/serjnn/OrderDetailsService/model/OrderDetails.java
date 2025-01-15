@@ -19,17 +19,17 @@ public class OrderDetails {
     private long id;
 
     private UUID uuid;
-    private Long clientId;
-    private String products_ids;
+    private long clientId;
+    private String productsIds;
     private BigDecimal sum;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
 
-    public OrderDetails(UUID uuid, Long clientId, String products_ids, BigDecimal sum) {
+    public OrderDetails(UUID uuid, long clientId, String products_ids, BigDecimal sum) {
         this.uuid = uuid;
         this.clientId = clientId;
-        this.products_ids = products_ids;
+        this.productsIds = products_ids;
         this.sum = sum;
-        this.created_at = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 }
