@@ -15,6 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class OrderDetailsController {
+
     private final OrderDetailsService orderDetailsService;
 
     @GetMapping("/byClient/{id}")
@@ -22,13 +23,13 @@ public class OrderDetailsController {
         return orderDetailsService.findByClientId(id);
     }
 
-    @PostMapping("/create")
-    Mono<Void> save(@RequestBody OrderDTO orderDTO) {
-        return orderDetailsService.createOrder(orderDTO).then();
+    @PostMapping("/addOrder")
+    Mono<OrderDetails> save(@RequestBody OrderDTO orderDTO) {
+        return orderDetailsService.createOrder(orderDTO);
     }
 
-    @PostMapping("/remove")
-    Mono<Void> save(@RequestBody UUID uuid) {
-        return orderDetailsService.remove(uuid);
+    @PostMapping("/removeOrder")
+    Mono<Void> remove(@RequestBody UUID uuid) {
+        return orderDetailsService.removeOrder(uuid);
     }
 }
